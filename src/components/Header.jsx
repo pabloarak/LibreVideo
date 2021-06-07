@@ -1,11 +1,12 @@
 import React from 'react';
+import '../assets/styles/components/Header.scss'
 
 const Header = () => (
     <header className="header">
-        <img className="header__img" src="../assets/img/logo.png" alt="Platzi Video"/>
+        <img className="header__img" src="../assets/images/logo.png" alt="Platzi Video"/>
         <div className="header__menu">
           <div className="header__menu--profile">
-            <img src="../assets/img/user.png" alt="User"/>
+            <img src="../assets/images/user.png" alt="User"/>
             <p>Perfil</p>
           </div>
           <ul>
