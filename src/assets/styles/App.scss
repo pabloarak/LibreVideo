@@ -1,5 +1,10 @@
 body {
-    margin: 0;
-    background-color: red;
-    color: white;
+    margin: 0px;
+    font-family: "Muli", sans-serif;
+    background: url("../images/background.jpg") no-repeat center center fixed;
+    background-size: 100% 100%;
+}
+
+* {
+    box-sizing: border-box;
 }
