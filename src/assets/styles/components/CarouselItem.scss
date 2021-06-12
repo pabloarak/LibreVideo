@@ -1,0 +1,64 @@
+.carousel-item {
+    background-color: transparent;
+    width: 200px;
+    height: 250px;
+    border-radius: 20px;
+    overflow: hidden;
+    margin-right: 10px;
+    display: inline-block;
+    cursor: pointer;
+    transition: 450ms all;
+    transform-origin: center left;
+}
+
+.carousel-item:hover ~ .carousel-item {
+    /*~ Selecciona todos los elementos excepto el elemento que está seleccionado
+    *El selector ~ de CSS nos permite dar estilos a todos que cumplan los requisitos y sean “hermanos directos”, es decir, que tengan el mismo elemento padre.
+    */
+    transform: translate3d(100px, 0, 0);
+    /*Desplaza elementos a la derecha*/
+}
+
+.carousel-item__img {
+    width: 200px;
+    height: 250px;
+    object-fit: cover;
+    /*Para que la imagen obtenga su tamaño original*/
+}
+
+.carousel-item__details {
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+    justify-content: flex-end;
+    background: transparent;
+    font-size: 10px;
+    opacity: 0;
+    transition: 450ms opacity;
+    padding: 10px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    opacity: 0;
+}
+
+.carousel-item__details--img {
+    width: 20px;
+}
+
+.carousel-item:hover .carousel-item__details {
+    opacity: 1;
+}
+
+.carousel-item__details--title {
+    color: white;
+    margin: 5px 0px 0px 0px;
+}
+
+.carousel-item__details--subtitle {
+    color: white;
+    font-size: 8px;
+    margin: 3px 0px;
+}
