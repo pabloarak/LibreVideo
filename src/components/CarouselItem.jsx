@@ -2,9 +2,9 @@
 import React from 'react';
 import '../assets/styles/components/CarouselItem.scss'
 // Images
-import playIcon from '../assets/icons/play.png';
-import sumIcon from '../assets/icons/sum.png';
-import exampleImage from '../assets/images/mandarina.jpg';
+import playIcon from '../assets/static/play.png';
+import sumIcon from '../assets/static/sum.png';
+import exampleImage from '../assets/static/mandarina.jpg';
 
 const CarouselItem = ({children}) => (
     <div className="carousel-item">
