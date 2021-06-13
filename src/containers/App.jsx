@@ -1,5 +1,6 @@
 import React from 'react';
 import Header from '../components/Header';
+import Footer from '../components/Footer';
 import Search from '../components/Search';
 import Categories from '../components/Categories';
 import Carousel from '../components/Carousel';
@@ -11,7 +12,7 @@ const App = () => (
         <Header/>
         <Search/>
 
-        <Categories>
+        <Categories title="Frutas">
             <Carousel>
                 <CarouselItem/>
                 <CarouselItem/>
@@ -19,6 +20,23 @@ const App = () => (
                 <CarouselItem/>
             </Carousel>
         </Categories>
+
+        <Categories title="Verduras">
+            <Carousel>
+                <CarouselItem/>
+                <CarouselItem/>
+            </Carousel>
+        </Categories>
+
+        <Categories title="Otros">
+            <Carousel>
+                <CarouselItem/>
+                <CarouselItem/>
+                <CarouselItem/>
+            </Carousel>
+        </Categories>
+
+        <Footer/>
     </div>
 );
 
