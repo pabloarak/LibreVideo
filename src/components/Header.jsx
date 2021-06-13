@@ -2,8 +2,8 @@
 import React from 'react';
 import '../assets/styles/components/Header.scss'
 // Images
-import logo from '../assets/images/logo.png';
-import userProfile from '../assets/images/user.png';
+import logo from '../assets/static/logo.png';
+import userProfile from '../assets/static/user.png';
 
 const Header = () => (
     <header className="header">
