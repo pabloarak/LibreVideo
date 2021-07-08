@@ -47,6 +47,14 @@ module.exports = {
             },
         ]
     },
+    devServer: {
+        historyApiFallback: true,
+        open: true,
+        watchOptions: {
+            poll: true,
+            ignored: "/node_modules/"
+        }
+    },
     plugins: [
         new HtmlWebPackPlugin({
             template: './public/index.html',
@@ -56,11 +64,4 @@ module.exports = {
             filename: 'assets/[name].css',
         })
     ],
-    devServer: {
-        open: true,
-        watchOptions: {
-            poll: true,
-            ignored: "/node_modules/"
-        }
-    }
 }
