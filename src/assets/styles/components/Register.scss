@@ -1,0 +1,25 @@
+.register {
+    /* background-image: linear-gradient(#FBAB7E, #F7CE68); */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 0px 30px;
+    min-height: calc(100vh - 200px) /* 100vh Se basa en el porcentaje que esta viendo el usuario. 200px para exeptuar el tamaño del header y del footer */
+}
+.register__container {
+    background-color: rgba(255,255,255,0.1);
+    border: 2px solid white;
+    border-radius: 40px;
+    color: white;
+    padding: 60px 68px 40px;
+    min-height: 700px;
+    width: 300px;
+    display: flex;
+    justify-content: space-around;
+    flex-direction: column;
+}
+.register__container--form {
+    display: flex;
+    flex-direction: column;
+}
