@@ -1,0 +1,64 @@
+.login {
+    /* background-image: linear-gradient(#FBAB7E, #F7CE68); */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 0px 30px;
+    min-height: calc(100vh - 200px) /* 100vh Se basa en el porcentaje que esta viendo el usuario. 200px para exeptuar el tamaño del header y del footer */
+}
+.login__container {
+    background-color: rgba(255,255,255,0.1);
+    border: 2px solid white;
+    border-radius: 40px;
+    color: white;
+    padding: 60px 68px 40px;
+    min-height: 700px;
+    width: 300px;
+    display: flex;
+    justify-content: space-around;
+    flex-direction: column;
+}
+.login__container--form {
+    display: flex;
+    flex-direction: column;
+}
+.login__container--form label {
+    font-size: 14px;
+}
+.login__container--remember-me {
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+.login__container--remember-me a {
+    color: white;
+    font-size: 14px;
+    text-decoration: none;
+}
+.login__container--remember-me a:hover {
+    text-decoration: underline;
+}
+.login__container--social-media > div { /*> coge todos los div en la clase*/
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+.login__container--social-media > div > img { /*> coge todos los img de todos los div en la clase*/
+    width: 30px;
+    margin-right: 10px;
+}
+.login__container--register {
+    font-size: 14px;
+}
+.login__container--register a {
+    color: white;
+    font-weight: bold;
+    font-size: 16px;
+    text-decoration: none;
+}
+.login__container--register a:hover {
+    text-decoration: underline;
+}
