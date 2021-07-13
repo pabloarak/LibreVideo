@@ -1,12 +1,19 @@
 // Libraries
 import React from 'react';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import gravatar from '../utils/gravatar';
 import '../assets/styles/components/Header.scss'
 // Images
 import logo from '../assets/static/logo.png';
 import userProfile from '../assets/static/user.png';
 
-const Header = () => (
+const Header = props => {
+
+  const { user } = props;
+  const hasUser = Object.keys(user).length > 0;
+
+  return(
     <header className="header">
         <Link to="/">
           <img className="header__img" src={logo} alt="Libre Video"/>
@@ -14,7 +21,11 @@ const Header = () => (
         
         <div className="header__menu">
           <div className="header__menu--profile">
-            <img src={userProfile} alt="User"/>
+            {hasUser ?
+              <img src={gravatar(user.email)} alt={user.email} />
+              :
+              <img src={userProfile} alt="User"/>
+            }
             <p>Perfil</p>
           </div>
           <ul>
@@ -27,6 +38,13 @@ const Header = () => (
           </ul>
         </div>
     </header>
-);
+  )
+};
 
-export default Header;
+const mapStateToProps = state => {
+  return {
+    user: state.user,
+  };
+};
+
+export default connect(mapStateToProps, null)(Header);

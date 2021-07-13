@@ -21,7 +21,7 @@ const reducer = (state, action) => {
         case actions.loginRequest:
             return {
                 ...state,
-                user: action.payLoad
+                user: action.payload
             }
         default:
             return state;
