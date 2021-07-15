@@ -28,6 +28,11 @@ const reducer = (state, action) => {
                 ...state,
                 user: action.payload
             }
+        case actions.registerRequest:
+            return {
+                ...state,
+                user: action.payload
+            }
         default:
             return state;
     }
