@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { logoutRequest } from '../actions';
 import gravatar from '../utils/gravatar';
+import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import '../assets/styles/components/Header.scss'
 // Images
@@ -12,12 +13,17 @@ import userProfile from '../assets/static/user.png';
 
 const Header = props => {
 
-  const { user } = props;
+  const { user, isLogin, isRegister } = props;
   const hasUser = Object.keys(user).length > 0;
 
   const handleLogout = () => {
     props.logoutRequest({});
   };
+
+  // const headerClass = classNames('header', {
+  //   isLogin,
+  //   isRegister,
+  // });
 
   return(
     <header className="header">
