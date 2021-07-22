@@ -56,9 +56,11 @@ const Register = props => {
                         />
                         <button className="button">Registrarme</button>
                     </form>
-                    <Link to="/login">
-                        Iniciar Sesión
-                    </Link>
+                    <p className="register__container--login">
+                        <Link to="/login">
+                            Iniciar Sesión
+                        </Link>
+                    </p>
                 </section>
             </section>
         </>

@@ -22,3 +22,15 @@
     display: flex;
     flex-direction: column;
 }
+.register__container--login {
+    font-size: 14px;
+}
+.register__container--login a {
+    color: white;
+    font-weight: bold;
+    font-size: 16px;
+    text-decoration: none;
+}
+.register__container--login a:hover {
+    text-decoration: underline;
+}
