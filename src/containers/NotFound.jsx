@@ -1,5 +1,6 @@
 import React from 'react';
 import '../assets/styles/components/NotFound.scss';
+import { Link } from 'react-router-dom';
 
 const NotFound = () => (
     <>
@@ -28,7 +29,8 @@ const NotFound = () => (
                         <p className="message__text">We're sorry, the page you were looking for isn't found here. The link you followed may either be broken or no longer exists. Please try again, or take a look at our.</p>
                     </div>
                     <div className="error__nav e-nav">
-                        <a href="https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=&cad=rja&uact=8&ved=2ahUKEwisr8GLiIHsAhXUX3wKHSQ9C944HhAWMAd6BAgIEAE&url=https%3A%2F%2Fwww.enationalelectronics.com%2F&usg=AOvVaw0CoGpfiGKRton9yE4Q8_Hv" target="_blanck" className="e-nav__link"></a>
+                        <Link to="/" className="e-nav__link">
+                        </Link>
                     </div>
                 </div>
             </section>
