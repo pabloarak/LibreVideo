@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router'
 import { getVideoSource } from '../actions';
 import '../assets/styles/components/Player.scss';
 
@@ -7,7 +8,7 @@ const Player = props => {
 
     const { id } = props.match.params;
     const [loading, setLoading] = useState(true);
-    const hasPlaying = Object.keys(props.playing).length > 0;
+    const hasPlaying = Object.keys(props.playing).length > 0 && props.playing.source !== '';
 
     useEffect(() => {
         props.getVideoSource(id);
