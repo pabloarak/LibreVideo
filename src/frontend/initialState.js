@@ -1,10 +1,3 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { Provider } from 'react-redux';
-import { createStore, compose } from 'redux';
-import reducer from './frontend/reducers';
-import App from './frontend/routes/App';
-
 const initialState = {
     "user": {},
     "playing": {},
@@ -170,15 +163,6 @@ const initialState = {
             "source": ""
         }
     ]
-}
+};
 
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__() || compose;
-
-const store = createStore(reducer, initialState, composeEnhancers);
-
-ReactDOM.render(
-    <Provider store={store}>
-        <App />
-    </Provider>,
-    document.getElementById('app')
-);
+export default initialState;
