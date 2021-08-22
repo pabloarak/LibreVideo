@@ -5,30 +5,30 @@ import NotFound from '../containers/NotFound';
 import Player from '../containers/Player';
 
 const routes = [
-    {
-        exact: true, 
-        path: '/',
-        component: Home,
-    },
-    {
-        exact: true, 
-        path: '/login',
-        component: Login,
-    },
-    {
-        exact: true, 
-        path: '/register',
-        component: Register,
-    },
-    {
-        exact: true, 
-        path: '/player',
-        component: Player,
-    },
-    {
-        name: 'NotFound',
-        component: NotFound,
-    },
+  {
+    exact: true,
+    path: '/',
+    component: Home,
+  },
+  {
+    exact: true,
+    path: '/login',
+    component: Login,
+  },
+  {
+    exact: true,
+    path: '/register',
+    component: Register,
+  },
+  {
+    exact: true,
+    path: '/player',
+    component: Player,
+  },
+  {
+    name: 'NotFound',
+    component: NotFound,
+  },
 ];
 
 export default routes;
