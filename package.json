@@ -37,6 +37,7 @@
     "react-router-config": "^5.1.1",
     "react-router-dom": "^5.2.0",
     "redux": "^4.1.1",
+    "redux-thunk": "^2.3.0",
     "webpack": "^5.51.1",
     "webpack-manifest-plugin": "^4.0.2"
   },
@@ -64,7 +65,7 @@
     "terser-webpack-plugin": "^5.1.4",
     "webpack-cli": "^4.8.0",
     "webpack-dev-middleware": "^5.0.0",
-    "webpack-dev-server": "^3.11.2",
+    "webpack-dev-server": "^4.3.0",
     "webpack-hot-middleware": "^2.25.0"
   }
 }
