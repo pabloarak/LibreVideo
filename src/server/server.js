@@ -87,48 +87,43 @@ const renderApp = (req, res) => {
   const preloadedState = store.getState();
   const html = renderToString(
     <Provider store={store}>
-        <StaticRouter location={req.url} context={{}}>
-            { renderRoutes(serverRoutes) }
-        </StaticRouter>
-    </Provider>
+      <StaticRouter location={req.url} context={{}}>
+        { renderRoutes(serverRoutes) }
+      </StaticRouter>
+    </Provider>,
   );
-  
-  res.set("Content-Security-Policy", "default-src *; style-src 'self' http://* 'unsafe-inline'; script-src 'self' http://* 'unsafe-inline' 'unsafe-eval'");
+  res.set('Content-Security-Policy', "default-src *; style-src 'self' http://* 'unsafe-inline'; script-src 'self' http://* 'unsafe-inline' 'unsafe-eval'");
   res.send(setResponse(html, preloadedState, req.hashManifest));
 };
 
 app.post('/auth/sign-in', async (req, res, next) => {
-
-  const { rememberMe } = req.body;
-
   passport.authenticate('basic', (error, data) => {
     try {
-      if(error || !data) {
+      if (error || !data) {
         next(boom.unauthorized());
       }
 
-      req.login(data, { session: false }, async (error) => {
-        if(error) {
-          next(error);
+      req.login(data, { session: false }, async (err) => {
+        if (err) {
+          next(err);
         }
 
         const { token, ...user } = data;
 
         res.cookie('token', token, {
-          httpOnly: !config.dev,
-          secure: !config.dev,
-          maxAge: rememberMe ? THIRTY_DAYS_IN_SEC : TWO_HOURS_IN_SEC
+          httpOnly: !(ENV === 'development'),
+          secure: !(ENV === 'development'),
         });
 
         res.status(200).json(user);
       });
-    } catch (error) {
-      next(error);
+    } catch (err) {
+      next(err);
     }
   })(req, res, next);
 });
-  
-app.post('/auth/sign-up', async function(req, res, next) {
+
+app.post('/auth/sign-up', async (req, res, next) => {
 
   const { body: user } = req;
 
