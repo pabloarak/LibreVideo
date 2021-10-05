@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import Header from '../components/Header';
 import { registerUser } from '../actions';
 import '../assets/styles/components/Register.scss';
@@ -68,6 +69,10 @@ const Register = (props) => {
 
 const mapDispatchToProps = {
   registerUser,
+};
+
+Register.propTypes = {
+  registerUser: PropTypes.func,
 };
 
 export default connect(null, mapDispatchToProps)(Register);
