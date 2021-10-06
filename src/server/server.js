@@ -15,7 +15,7 @@ import session from 'express-session';
 import axios from 'axios';
 import serverRoutes from '../frontend/routes/serverRoutes';
 import reducer from '../frontend/reducers';
-import initialState from '../frontend/initialState';
+import Layout from '../frontend/components/Layout';
 import getManifest from './getManifest';
 
 dotenv.config();
@@ -44,14 +44,14 @@ if(ENV === 'development') {
   app.use(webpackHotMiddleware(compiler));
 } else {
   app.use((req, res, next) => {
-    if(!req.hashManifest)
-        req.hashManifest = getManifest();
-
+    if (!req.hashManifest) {
+      req.hashManifest = getManifest();
+    }
     next();
   });
   app.use(express.static(`${__dirname}/public`));
   app.use(helmet());
-  app.disable('x-powered-by'); 
+  app.disable('x-powered-by');
 }
 
 const setResponse = (html, preloadedState, manifest) => {
@@ -83,16 +83,41 @@ const setResponse = (html, preloadedState, manifest) => {
 };
 
 const renderApp = (req, res) => {
+  let initialState;
+  const { email, name, id } = req.cookies;
+
+  if (id) {
+    initialState = {
+      user: {
+        email, name, id,
+      },
+      myList: [],
+      trends: [],
+      originals: [],
+      searchVideo: [],
+    };
+  } else {
+    initialState = {
+      user: {},
+      myList: [],
+      trends: [],
+      originals: [],
+      searchVideo: [],
+    };
+  }
+
   const store = createStore(reducer, initialState);
   const preloadedState = store.getState();
+  const isLogged = (initialState.user.id);
   const html = renderToString(
     <Provider store={store}>
       <StaticRouter location={req.url} context={{}}>
-        { renderRoutes(serverRoutes) }
+        <Layout>
+          {renderRoutes(serverRoutes(isLogged))}
+        </Layout>
       </StaticRouter>
     </Provider>,
   );
-  res.set('Content-Security-Policy', "default-src *; style-src 'self' http://* 'unsafe-inline'; script-src 'self' http://* 'unsafe-inline' 'unsafe-eval'");
   res.send(setResponse(html, preloadedState, req.hashManifest));
 };
 
