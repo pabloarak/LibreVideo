@@ -71,9 +71,9 @@ const setResponse = (html, preloadedState, manifest) => {
         <div id="app">${html}</div>
         <script>
             window.__PRELOADED_STATE__ = ${JSON.stringify(preloadedState).replace(
-                /</g,
-                '\\u003c'
-            )}
+      /</g,
+      '\\u003c'
+    )}
         </script> 
         <script src="${mainBuild}" type="text/javascript"></script>
         <script src="${vendorBuild}" type="text/javascript"></script>
@@ -82,21 +82,27 @@ const setResponse = (html, preloadedState, manifest) => {
   `);
 };
 
-const renderApp = (req, res) => {
+const renderApp = async (req, res) => {
   let initialState;
-  const { email, name, id } = req.cookies;
+  const { token, email, name, id } = req.cookies;
 
-  if (id) {
+  try {
+    let movieList = await axios({
+      url: `${process.env.API_URL}/movies`,
+      headers: { Authorization: token },
+      method: 'get',
+    });
+    movieList = movieList.data.data;
     initialState = {
       user: {
-        email, name, id,
+        id, email, name,
       },
       myList: [],
-      trends: [],
-      originals: [],
+      trends: movieList.filter((movie) => movie.contentRating === 'PG' && movie._id),
+      originals: movieList.filter((movie) => movie.contentRating === 'G' && movie._id),
       searchVideo: [],
     };
-  } else {
+  } catch (err) {
     initialState = {
       user: {},
       myList: [],
@@ -121,57 +127,67 @@ const renderApp = (req, res) => {
   res.send(setResponse(html, preloadedState, req.hashManifest));
 };
 
-app.post('/auth/sign-in', async (req, res, next) => {
-  passport.authenticate('basic', (error, data) => {
-    try {
-      if (error || !data) {
-        next(boom.unauthorized());
-      }
+app.post(
+  '/auth/sign-in',
+  (req, res, next) => {
+    passport.authenticate('basic', (error, data) => {
+      try {
 
-      req.login(data, { session: false }, async (err) => {
-        if (err) {
-          next(err);
+        if (error || !data) {
+          next(boom.unauthorized());
         }
 
-        const { token, ...user } = data;
+        req.login(data, { session: false }, (err) => {
+          if (err) {
+            next(err);
+          }
 
-        res.cookie('token', token, {
-          httpOnly: !(ENV === 'development'),
-          secure: !(ENV === 'development'),
+          const { token, expires, maxAge, path, ...user } = data;
+
+          res.cookie('token', token, {
+            httpOnly: !(ENV === 'development'),
+            secure: !(ENV === 'development'),
+            expires,
+            maxAge,
+            path,
+          });
+
+          res.status(200).json(user);
         });
+      } catch (err) {
+        next(err);
+      }
+    })(req, res, next);
+  },
+);
 
-        res.status(200).json(user);
+app.post(
+  '/auth/sign-up',
+  async (req, res, next) => {
+
+    const { body: user } = req;
+
+    try {
+      const userData = await axios({
+        url: `${process.env.API_URL}/auth/sign-up`,
+        method: 'post',
+        data: {
+          email: user.email,
+          name: user.name,
+          password: user.password,
+        },
       });
-    } catch (err) {
-      next(err);
+
+      res.status(201).json({
+        name: req.body.name,
+        email: req.body.email,
+        id: userData.data.id,
+      });
+    } catch (error) {
+      next(error);
     }
-  })(req, res, next);
-});
-
-app.post('/auth/sign-up', async (req, res, next) => {
-
-  const { body: user } = req;
-
-  try {
-    const userData = await axios({
-      url: `${process.env.API_URL}/auth/sign-up`,
-      method: 'post',
-      data: {
-        email: user.email,
-        name: user.name,
-        password: user.password,
-      },
-    });
-
-    res.status(201).json({
-      name: req.body.name,
-      email: req.body.email,
-      id: userData.data.id,
-    });
-  } catch (error) {
-    next(error);
-  }
-});
+  },
+);
 
 app.get('*', renderApp);
 
