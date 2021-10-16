@@ -93,11 +93,19 @@ const renderApp = async (req, res) => {
       method: 'get',
     });
     movieList = movieList.data.data;
+
+    let userMovieList = await axios({
+      url: `${process.env.API_URL}/user-movies/?userId=${id}`,
+      headers: { Authorization: token },
+      method: 'get',
+    });
+    userMovieList = userMovieList.data.data;
+
     initialState = {
       user: {
         id, email, name,
       },
-      myList: [],
+      myList: userMovieList.map((userMovie) => movieList.find((movie) => movie._id === userMovie.movieId)),
       trends: movieList.filter((movie) => movie.contentRating === 'PG' && movie._id),
       originals: movieList.filter((movie) => movie.contentRating === 'G' && movie._id),
       searchVideo: [],
@@ -142,14 +150,11 @@ app.post(
             next(err);
           }
 
-          const { token, expires, maxAge, path, ...user } = data;
+          const { token, ...user } = data;
 
           res.cookie('token', token, {
             httpOnly: !(ENV === 'development'),
             secure: !(ENV === 'development'),
-            expires,
-            maxAge,
-            path,
           });
 
           res.status(200).json(user);
@@ -189,11 +194,74 @@ app.post(
   },
 );
 
+app.post(
+  '/user-movies',
+  async (req, res, next) => {
+    try {
+      const { body: userMovie } = req;
+      const { id, token } = req.cookies;
+
+      const { data, status } = await axios({
+        url: `${process.env.API_URL}/user-movies`,
+        headers: { Authorization: token },
+        method: 'post',
+        data: {
+          userId: id,
+          movieId: userMovie.movieId,
+        },
+      });
+
+      if (status !== 201) {
+        return next(boom.badImplementation());
+      }
+
+      res.status(201).json(data);
+    } catch (error) {
+      next(error);
+    }
+  },
+);
+
+app.delete(
+  '/user-movies/:movieId',
+  async (req, res, next) => {
+    try {
+      const { movieId } = req.params;
+      const { token, id } = req.cookies;
+
+      let userMovies = await axios({
+        url: `${process.env.API_URL}/user-movies/?userId=${id}`,
+        headers: { Authorization: token },
+        method: 'get',
+      });
+
+      userMovies = userMovies.data.data;
+
+      const userMovieId = userMovies.filter((movie) => movie.movieId === movieId)[0]._id;
+
+      const { data, status } = await axios({
+        url: `${process.env.API_URL}/user-movies/${userMovieId}`,
+        headers: { Authorization: token },
+        method: 'delete',
+      });
+
+      if (status !== 200) {
+        return next(boom.badImplementation());
+      }
+
+      res.status(200).json(data);
+    } catch (error) {
+      next(error);
+    }
+  },
+);
+
 app.get('*', renderApp);
 
 app.listen(PORT, (err) => {
-  if(err) 
+  if (err) {
     console.log(err);
-  else
+  } else {
     console.log(`Server running on port ${PORT}`);
+  }
 });

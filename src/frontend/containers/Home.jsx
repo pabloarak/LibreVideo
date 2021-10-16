@@ -8,7 +8,6 @@ import CarouselItem from '../components/CarouselItem';
 import '../assets/styles/App.scss';
 
 const Home = ({ myList, trends, originals, searchVideo }) => {
-
   return (
     <>
       <Header />
@@ -20,7 +19,7 @@ const Home = ({ myList, trends, originals, searchVideo }) => {
           <Categories title='Búsqueda'>
             <Carousel>
               {
-                searchVideo.map((item) => <CarouselItem key={item.id} {...item} />)
+                searchVideo.map((item) => <CarouselItem key={item._id} {...item} />)
               }
             </Carousel>
           </Categories>
@@ -50,7 +49,7 @@ const Home = ({ myList, trends, originals, searchVideo }) => {
           <Categories title='Tendencias'>
             <Carousel>
               {
-                trends.map((item) => <CarouselItem key={item.id} {...item} />)
+                trends.map((item) => <CarouselItem key={item._id} {...item} />)
               }
             </Carousel>
           </Categories>
@@ -62,7 +61,7 @@ const Home = ({ myList, trends, originals, searchVideo }) => {
           <Categories title='Originales'>
             <Carousel>
               {
-                originals.map((item) => <CarouselItem key={item.id} {...item} />)
+                originals.map((item) => <CarouselItem key={item._id} {...item} />)
               }
             </Carousel>
           </Categories>

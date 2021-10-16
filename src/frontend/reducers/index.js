@@ -4,7 +4,7 @@ const reducer = (state, action) => {
 
   switch (action.type) {
     case actions.setFavorite: {
-      const exist = state.myList.find((item) => item.id === action.payload.id);
+      const exist = state.myList.find((item) => item._id === action.payload._id);
 
       if (exist) return { ...state };
 
@@ -16,7 +16,7 @@ const reducer = (state, action) => {
     case actions.deleteFavorite: {
       return {
         ...state,
-        myList: state.myList.filter((items) => items.id !== action.payload),
+        myList: state.myList.filter((items) => items._id !== action.payload),
       };
     }
     case actions.loginRequest: {
