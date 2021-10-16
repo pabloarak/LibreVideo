@@ -22,15 +22,12 @@ passport.use(
 
       const cookieElements = headers['set-cookie'][0].split('; ');
       const token = cookieElements.filter((e) => e.includes('token'))[0].split('=')[1];
-      const expires = cookieElements.filter((e) => e.includes('Expires'))[0].split('=')[1];
-      const maxAge = cookieElements.filter((e) => e.includes('Max-Age'))[0].split('=')[1];
-      const path = cookieElements.filter((e) => e.includes('Path'))[0].split('=')[1];
 
       if (!data || status !== 200) {
         return cb(boom.unauthorized(), false);
       }
 
-      return cb(null, { token, expires, maxAge, path, ...data });
+      return cb(null, { token, ...data });
     } catch (error) {
       cb(error);
     }
